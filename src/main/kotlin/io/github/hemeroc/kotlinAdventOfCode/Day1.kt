@@ -1,20 +1,20 @@
 package io.github.hemeroc.kotlinAdventOfCode
 
-import java.io.File
+import io.github.hemeroc.kotlinAdventOfCode.util.lines
 
 fun main() {
-    println(task1sub1("/input1.txt"))
-    println(task1sub2("/input1.txt"))
+    println(fuel("/input1.txt"))
+    println(totalFuel("/input1.txt"))
 }
 
-private fun task1sub1(file: String) =
-        lines(file)
+private fun fuel(filename: String) =
+        lines(filename)
                 .map { it.toInt() }
                 .map { calculateFuel(it) }
                 .sum()
 
-private fun task1sub2(file: String) =
-        lines(file)
+private fun totalFuel(filename: String) =
+        lines(filename)
                 .map { it.toInt() }
                 .map { calculateTotalFuel(it) }
                 .sum()
@@ -29,5 +29,3 @@ private tailrec fun calculateTotalFuel(mass: Int, fuelTotal: Int = 0): Int {
     val fuelNeeded = calculateFuel(mass)
     return calculateTotalFuel(fuelNeeded, fuelTotal + fuelNeeded)
 }
-
-fun lines(file: String) = File(object {}::class.java.getResource(file).toURI()).readLines()
