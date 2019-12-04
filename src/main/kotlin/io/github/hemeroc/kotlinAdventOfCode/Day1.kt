@@ -1,6 +1,6 @@
 package io.github.hemeroc.kotlinAdventOfCode
 
-import io.github.hemeroc.kotlinAdventOfCode.util.lines
+import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 
 fun main() {
     println(fuel("/input1.txt"))
@@ -8,13 +8,13 @@ fun main() {
 }
 
 private fun fuel(filename: String) =
-        lines(filename)
+        readLines(filename)
                 .map { it.toInt() }
                 .map { calculateFuel(it) }
                 .sum()
 
 private fun totalFuel(filename: String) =
-        lines(filename)
+        readLines(filename)
                 .map { it.toInt() }
                 .map { calculateTotalFuel(it) }
                 .sum()

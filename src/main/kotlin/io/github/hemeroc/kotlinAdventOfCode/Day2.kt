@@ -1,6 +1,6 @@
 package io.github.hemeroc.kotlinAdventOfCode
 
-import io.github.hemeroc.kotlinAdventOfCode.util.file
+import io.github.hemeroc.kotlinAdventOfCode.util.readFile
 import java.lang.RuntimeException
 
 fun main() {
@@ -16,7 +16,7 @@ fun main() {
 }
 
 private fun executeProgram(filename: String, noun: Int? = null, verb: Int? = null, delimiter: String = ","): Int {
-    val program = file(filename).readText().split(delimiter)
+    val program = readFile(filename).readText().split(delimiter)
             .map { it.toInt() }
             .toIntArray()
             .also {
