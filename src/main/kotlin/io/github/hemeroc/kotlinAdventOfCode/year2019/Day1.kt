@@ -1,20 +1,20 @@
-package io.github.hemeroc.kotlinAdventOfCode
+package io.github.hemeroc.kotlinAdventOfCode.year2019
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 
 fun main() {
-    println(fuel("/input1.txt"))
-    println(totalFuel("/input1.txt"))
+    println(fuel("input1.txt"))
+    println(totalFuel("input1.txt"))
 }
 
 private fun fuel(filename: String) =
-        readLines(filename)
+        readLines(2019, filename)
                 .map { it.toInt() }
                 .map { calculateFuel(it) }
                 .sum()
 
 private fun totalFuel(filename: String) =
-        readLines(filename)
+        readLines(2019, filename)
                 .map { it.toInt() }
                 .map { calculateTotalFuel(it) }
                 .sum()

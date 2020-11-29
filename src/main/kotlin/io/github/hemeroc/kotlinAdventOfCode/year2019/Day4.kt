@@ -1,4 +1,4 @@
-package io.github.hemeroc.kotlinAdventOfCode
+package io.github.hemeroc.kotlinAdventOfCode.year2019
 
 fun main() {
     println(

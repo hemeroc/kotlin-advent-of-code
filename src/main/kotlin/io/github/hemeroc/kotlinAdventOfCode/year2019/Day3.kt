@@ -1,4 +1,4 @@
-package io.github.hemeroc.kotlinAdventOfCode
+package io.github.hemeroc.kotlinAdventOfCode.year2019
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 import java.lang.Integer.max
@@ -9,7 +9,7 @@ import kotlin.math.sqrt
 
 fun main() {
     val center = Point(0, 0)
-    val lines = readLines("/input3.txt").map {
+    val lines = readLines(2019, "input3.txt").map {
         var lastPoint = center
         it.split(",").map { moveOperation ->
             when (moveOperation.head()) {
@@ -30,7 +30,7 @@ fun main() {
     println(manhattanDistanceToNearestIntersection)
     val realDistanceToNearestIntersection = intersections
             .map { intersection -> lines[0].distanceToPoint(intersection) + lines[1].distanceToPoint(intersection) }
-            .min()
+            .minOrNull()
     println(realDistanceToNearestIntersection)
 }
 
