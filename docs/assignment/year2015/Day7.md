@@ -1,4 +1,4 @@
-### --- Day 7: Some Assembly Required ---
+#### --- Day 7: Some Assembly Required ---
 
 This year, Santa brought little Bobby Tables a set of wires and [bitwise logic gates](https://en.wikipedia.org/wiki/Bitwise_operation)! Unfortunately, little Bobby is a little under the recommended age range, and he needs help assembling the circuit.
 
@@ -45,7 +45,7 @@ In little Bobby's kit's instructions booklet (provided as your puzzle input), wh
 
 Your puzzle answer was `46065`.
 
-### --- Part Two ---
+#### --- Part Two ---
 
 Now, take the signal you got on wire `a`, override wire `b` to that signal, and reset the other wires (including wire `a`). What new signal is ultimately provided to wire `a`?
 
