@@ -22,6 +22,7 @@ fun main() {
         trees
             .mapIndexed { index, treeLine -> countTrees(index, treeLine, slope) }
             .sum()
+            .toLong()
     }.product()
     println(
         """
@@ -37,6 +38,6 @@ fun countTrees(index: Int, trees: String, slope: Slope) =
         trees[(index / slope.down) * slope.right % trees.length] == '#'
     ) 1 else 0
 
-private fun List<Int>.product() = this.reduce { left, right -> left * right }
+private fun List<Long>.product() = this.reduce { left, right -> left * right }
 
 
