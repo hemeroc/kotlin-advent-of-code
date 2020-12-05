@@ -1,6 +1,7 @@
 package io.github.hemeroc.kotlinAdventOfCode.year2020
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
+import kotlin.system.measureTimeMillis
 
 private val Pair<Int, Int>.product: Int
     get() = first * second
@@ -9,11 +10,15 @@ private val Triple<Int, Int, Int>.product: Int
     get() = first * second * third
 
 fun main() {
-    val datapoints = readLines(2020, "input1.txt").map { it.toInt() }
-    println("""
-        Found: ${solvePart1(datapoints)?.product}
-        Found: ${solvePart2(datapoints)?.product}
-    """.trimIndent())
+    measureTimeMillis {
+        val datapoints = readLines(2020, "input1.txt").map { it.toInt() }
+        println(
+            """
+                Found: ${solvePart1(datapoints)?.product}
+                Found: ${solvePart2(datapoints)?.product}
+            """.trimIndent()
+        )
+    }.also { println("Calculated in ${it}ms") }
 }
 
 private fun solvePart1(datapoints: List<Int>): Pair<Int, Int>? {

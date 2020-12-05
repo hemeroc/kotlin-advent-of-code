@@ -1,6 +1,7 @@
 package io.github.hemeroc.kotlinAdventOfCode.year2020
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
+import kotlin.system.measureTimeMillis
 
 data class Slope(
     val right: Int,
@@ -8,28 +9,30 @@ data class Slope(
 )
 
 fun main() {
-    val trees = readLines(2020, "input3.txt")
-    val sumTreesOneSlope = trees
-        .mapIndexed { index, treeLine -> countTrees(index, treeLine, Slope(3, 1)) }
-        .sum()
-    val sumTreesMultiSlope = listOf(
-        Slope(1, 1),
-        Slope(3, 1),
-        Slope(5, 1),
-        Slope(7, 1),
-        Slope(1, 2),
-    ).map { slope ->
-        trees
-            .mapIndexed { index, treeLine -> countTrees(index, treeLine, slope) }
+    measureTimeMillis {
+        val trees = readLines(2020, "input3.txt")
+        val sumTreesOneSlope = trees
+            .mapIndexed { index, treeLine -> countTrees(index, treeLine, Slope(3, 1)) }
             .sum()
-            .toLong()
-    }.product()
-    println(
-        """
-        Encountered trees one slope: $sumTreesOneSlope
-        Encountered trees multi slope: $sumTreesMultiSlope
-    """.trimIndent()
-    )
+        val sumTreesMultiSlope = listOf(
+            Slope(1, 1),
+            Slope(3, 1),
+            Slope(5, 1),
+            Slope(7, 1),
+            Slope(1, 2),
+        ).map { slope ->
+            trees
+                .mapIndexed { index, treeLine -> countTrees(index, treeLine, slope) }
+                .sum()
+                .toLong()
+        }.product()
+        println(
+            """
+                Encountered trees one slope: $sumTreesOneSlope
+                Encountered trees multi slope: $sumTreesMultiSlope
+            """.trimIndent()
+        )
+    }.also { println("Calculated in ${it}ms") }
 }
 
 fun countTrees(index: Int, trees: String, slope: Slope) =

@@ -1,6 +1,7 @@
 package io.github.hemeroc.kotlinAdventOfCode.year2020
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
+import kotlin.system.measureTimeMillis
 
 class PassportValidator {
     var byr: String? = null
@@ -76,44 +77,46 @@ class PassportValidator {
 }
 
 fun main() {
-    var softValidPassports = 0
-    var strongValidPassports = 0
-    val passportValidator = PassportValidator()
-    val passwordParser = Regex(
-        "(" +
-                "(byr:(?<byr>\\S+)[\\s]*)|" +
-                "(iyr:(?<iyr>\\S+)[\\s]*)|" +
-                "(eyr:(?<eyr>\\S+)[\\s]*)|" +
-                "(hgt:(?<hgt>\\S+)[\\s]*)|" +
-                "(hcl:(?<hcl>\\S+)[\\s]*)|" +
-                "(ecl:(?<ecl>\\S+)[\\s]*)|" +
-                "(pid:(?<pid>\\S+)[\\s]*)|" +
-                "(cid:(?<cid>\\S+)[\\s]*)" +
-                ")*.*"
-    )
-    (readLines(2020, "input4.txt") + "").forEach { dataLine ->
-        if (dataLine.isBlank()) {
-            softValidPassports += if (passportValidator.validateSoft()) 1 else 0
-            strongValidPassports += if (passportValidator.validateStrong()) 1 else 0
-            passportValidator.reset()
-        } else {
-            with(passwordParser.matchEntire(dataLine) ?: return@forEach) {
-                passportValidator.byr = this.groups["byr"]?.value ?: passportValidator.byr
-                passportValidator.iyr = this.groups["iyr"]?.value ?: passportValidator.iyr
-                passportValidator.eyr = this.groups["eyr"]?.value ?: passportValidator.eyr
-                passportValidator.hgt = this.groups["hgt"]?.value ?: passportValidator.hgt
-                passportValidator.hcl = this.groups["hcl"]?.value ?: passportValidator.hcl
-                passportValidator.ecl = this.groups["ecl"]?.value ?: passportValidator.ecl
-                passportValidator.pid = this.groups["pid"]?.value ?: passportValidator.pid
-                passportValidator.cid = this.groups["cid"]?.value ?: passportValidator.cid
+    measureTimeMillis {
+        var softValidPassports = 0
+        var strongValidPassports = 0
+        val passportValidator = PassportValidator()
+        val passwordParser = Regex(
+            "(" +
+                    "(byr:(?<byr>\\S+)[\\s]*)|" +
+                    "(iyr:(?<iyr>\\S+)[\\s]*)|" +
+                    "(eyr:(?<eyr>\\S+)[\\s]*)|" +
+                    "(hgt:(?<hgt>\\S+)[\\s]*)|" +
+                    "(hcl:(?<hcl>\\S+)[\\s]*)|" +
+                    "(ecl:(?<ecl>\\S+)[\\s]*)|" +
+                    "(pid:(?<pid>\\S+)[\\s]*)|" +
+                    "(cid:(?<cid>\\S+)[\\s]*)" +
+                    ")*.*"
+        )
+        (readLines(2020, "input4.txt") + "").forEach { dataLine ->
+            if (dataLine.isBlank()) {
+                softValidPassports += if (passportValidator.validateSoft()) 1 else 0
+                strongValidPassports += if (passportValidator.validateStrong()) 1 else 0
+                passportValidator.reset()
+            } else {
+                with(passwordParser.matchEntire(dataLine) ?: return@forEach) {
+                    passportValidator.byr = this.groups["byr"]?.value ?: passportValidator.byr
+                    passportValidator.iyr = this.groups["iyr"]?.value ?: passportValidator.iyr
+                    passportValidator.eyr = this.groups["eyr"]?.value ?: passportValidator.eyr
+                    passportValidator.hgt = this.groups["hgt"]?.value ?: passportValidator.hgt
+                    passportValidator.hcl = this.groups["hcl"]?.value ?: passportValidator.hcl
+                    passportValidator.ecl = this.groups["ecl"]?.value ?: passportValidator.ecl
+                    passportValidator.pid = this.groups["pid"]?.value ?: passportValidator.pid
+                    passportValidator.cid = this.groups["cid"]?.value ?: passportValidator.cid
+                }
             }
-        }
 
-    }
-    println(
-        """
-        Soft valid passwords: $softValidPassports
-        Strong valid passwords: $strongValidPassports
-    """.trimIndent()
-    )
+        }
+        println(
+            """
+                Soft valid passwords: $softValidPassports
+                Strong valid passwords: $strongValidPassports
+            """.trimIndent()
+        )
+    }.also { println("Calculated in ${it}ms") }
 }
