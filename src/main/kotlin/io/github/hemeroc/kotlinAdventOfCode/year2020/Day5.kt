@@ -5,25 +5,22 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
     measureTimeMillis {
-        val replaceWithZero = Regex("[FL]")
-        val replaceWithOne = Regex("[BR]")
-        val rowRegex = Regex("(?<row>[01]{7})(?<column>[01]{3})")
-        val result = readLines(2020, "input5.txt")
-        val seats = result.map { line ->
-            val groups = rowRegex.matchEntire(
-                line
-                    .replace(replaceWithOne, "1")
-                    .replace(replaceWithZero, "0")
-            )?.groups ?: throw IllegalArgumentException()
-            val row = groups["row"]?.value?.toIntOrNull(2) ?: throw IllegalArgumentException()
-            val column = groups["column"]?.value?.toIntOrNull(2) ?: throw IllegalArgumentException()
+        val seats = readLines(2020, "input5.txt").map { line ->
+            val row = line.take(7)
+                .replace('F', '0')
+                .replace('B', '1')
+                .toIntOrNull(2)
+                ?: throw IllegalArgumentException()
+            val column = line.takeLast(3)
+                .replace('L', '0')
+                .replace('R', '1')
+                .toIntOrNull(2)
+                ?: throw IllegalArgumentException()
             val seat = row * 8 + column
             seat
         }.sorted()
         val maxSeat = seats.maxOrNull()
-        val missingSeat = seats.findIndexed { index, seat ->
-            index != 0 && seats[index - 1] != seat - 1
-        }?.let { it - 1 }
+        val missingSeat = ((seats.first()..seats.last()) - seats).single()
         println(
             """
                 Max seat: $maxSeat
@@ -31,11 +28,4 @@ fun main() {
             """.trimIndent()
         )
     }.also { println("Calculated in ${it}ms") }
-}
-
-private fun <E> List<E>.findIndexed(predicate: (Int, E) -> Boolean): E? {
-    forEachIndexed { index, element ->
-        if (predicate.invoke(index, element)) return element
-    }
-    return null
 }
