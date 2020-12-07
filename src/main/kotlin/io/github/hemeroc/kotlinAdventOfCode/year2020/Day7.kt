@@ -5,21 +5,21 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
     measureTimeMillis {
-        val outerBagCount = part1()
-        val innerBagCount = part2()
+        val inputLines = readLines(2020, "input7.txt")
+        val startingBag = "shiny gold"
         println(
             """
-                Outer bag count: $outerBagCount
-                Inner bag count: $innerBagCount
+                Outer bag count: ${solvePart1(inputLines, startingBag)}
+                Inner bag count: ${solvePart2(inputLines, startingBag)}
             """.trimIndent()
         )
     }.also { println("Calculated in ${it}ms") }
 }
 
-private fun part1(): Int {
+private fun solvePart1(inputLines: List<String>, startingBag: String): Int {
     val bagMap = mutableMapOf<String, MutableList<String>>()
     val bagRegex = Regex("(?<bag>\\S+ \\S+) bag")
-    readLines(2020, "input7.txt").forEach { input ->
+    inputLines.forEach { input ->
         val found = bagRegex.findAll(input)
         val outerBag = found.first().groups["bag"]?.value ?: throw RuntimeException()
         found.drop(1).forEach { innerBagMatch ->
@@ -30,13 +30,13 @@ private fun part1(): Int {
             }
         }
     }
-    return findOuterBags(bagMap, "shiny gold").size - 1
+    return findOuterBags(bagMap, startingBag).size - 1
 }
 
-private fun part2(): Int {
+private fun solvePart2(inputLines: List<String>, startingBag: String): Int {
     val bagMap = mutableMapOf<String, List<Pair<Int, String>>>()
     val bagRegex = Regex("((?<count>\\d+) )?(?<bag>\\S+ \\S+) bag")
-    readLines(2020, "input7.txt").forEach { input ->
+    inputLines.forEach { input ->
         val found = bagRegex.findAll(input)
         val outerBag = found.first().groups["bag"]?.value ?: throw RuntimeException()
         val toList = found.drop(1).map { innerBagMatch ->
@@ -49,15 +49,12 @@ private fun part2(): Int {
         if (toList.isNotEmpty()) bagMap[outerBag] = toList
 
     }
-    println(bagMap)
-    return countInnerBags(bagMap, "shiny gold") - 1
+    return countInnerBags(bagMap, startingBag) - 1
 }
 
 fun countInnerBags(bagMap: MutableMap<String, List<Pair<Int, String>>>, searchBag: String, times: Int = 1): Int {
     val mutableSet = bagMap[searchBag] ?: return 1 * times
-    return mutableSet.map { subBag ->
-        countInnerBags(bagMap, subBag.second, subBag.first) * times
-    }.sum() + times
+    return mutableSet.map { countInnerBags(bagMap, it.second, it.first) * times }.sum() + times
 }
 
 fun findOuterBags(bagMap: MutableMap<String, MutableList<String>>, searchBag: String): Set<String> {
