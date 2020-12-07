@@ -17,7 +17,7 @@ fun main() {
                 charSetAll = setOf()
             } else {
                 val inputSet = input.toSet()
-                charSetAll = if (charSet.isEmpty()) charSetAll + inputSet else charSetAll.intersect(inputSet)
+                charSetAll = if (charSet.isEmpty()) charSetAll + inputSet else charSetAll intersect inputSet
                 charSet += inputSet
             }
         }
