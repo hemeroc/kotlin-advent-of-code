@@ -26,7 +26,7 @@ fun main() {
     val intersections = lines[0]
             .flatMap { line -> lines[1].mapNotNull { it.intersection(line) } }
             .filter { point -> point != center }
-    val manhattanDistanceToNearestIntersection = intersections.map { point -> abs(point.x) + abs(point.y) }.min()
+    val manhattanDistanceToNearestIntersection = intersections.map { point -> abs(point.x) + abs(point.y) }.minOrNull()
     println(manhattanDistanceToNearestIntersection)
     val realDistanceToNearestIntersection = intersections
             .map { intersection -> lines[0].distanceToPoint(intersection) + lines[1].distanceToPoint(intersection) }
