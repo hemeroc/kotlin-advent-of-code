@@ -1,6 +1,10 @@
 package io.github.hemeroc.kotlinAdventOfCode.year2020
 
+import io.github.hemeroc.kotlinAdventOfCode.util.Position
+import io.github.hemeroc.kotlinAdventOfCode.util.forEachPositioned
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
+import io.github.hemeroc.kotlinAdventOfCode.util.set
+import io.github.hemeroc.kotlinAdventOfCode.util.get
 import kotlin.system.measureTimeMillis
 
 fun main() {
@@ -58,21 +62,3 @@ private fun List<List<Char>>.firstSeatInDirection(
 }
 
 private fun <T> iff(boolean: Boolean, trueValue: T, falseValue: T? = null) = if (boolean) trueValue else falseValue
-
-data class Position(val x: Int, val y: Int) {
-    operator fun plus(position: Position) = Position(x + position.x, y + position.y)
-}
-
-private fun <T> List<List<T>>.forEachPositioned(function: (Position, T) -> Unit) =
-    this.forEachIndexed { x, sub ->
-        sub.forEachIndexed { y, element ->
-            function(Position(x, y), element)
-        }
-    }
-
-private operator fun <T> List<MutableList<T>>.set(current: Position, value: T) {
-    this[current.x][current.y] = value
-}
-
-private operator fun <T> List<List<T>>.get(current: Position) =
-    this[current.x][current.y]
