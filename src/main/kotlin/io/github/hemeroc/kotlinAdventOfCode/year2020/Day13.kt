@@ -1,44 +1,33 @@
 package io.github.hemeroc.kotlinAdventOfCode.year2020
 
+import io.github.hemeroc.kotlinAdventOfCode.util.partitionIndexed
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
-import java.math.BigInteger
+import io.github.hemeroc.kotlinAdventOfCode.util.rem
 import java.math.BigInteger.ONE
 import kotlin.system.measureTimeMillis
 
 fun main() {
     measureTimeMillis {
         val programInput = readLines(2020, "input13.txt")
-        val earliestDeparture = programInput[0].toInt()
-        val busToTake = programInput[1]
-            .split(',')
+        val earliestDep = programInput[0].toInt()
+        val busInput = programInput[1].split(',')
+        val bus = busInput
             .mapNotNull { it.toIntOrNull() }
-            .map {
-                val departureMinutesAgo = earliestDeparture % it
-                if (departureMinutesAgo != 0) Pair(it, it - departureMinutesAgo) else Pair(it, 0)
-            }
+            .map { dep -> (earliestDep % dep).let { offset -> Pair(dep, if (offset != 0) dep - offset else 0) } }
             .minByOrNull { it.second } ?: throw RuntimeException()
-        val crt = crt(programInput[1].split(','))
+        val firstTime = busInput
+            .map { it.toBigIntegerOrNull() ?: ONE }
+            .partitionIndexed({ _, value -> value }, { index, value -> (index % value).inv() + value })
+            .let { (first, second) ->
+                first.reduce { l, r -> l * r }.let { product ->
+                    (first zip second).sumOf { (f, s) -> s * (product / f).let { it * it.modInverse(f) } } % product
+                }
+            }
         println(
             """
-                Bus to take ${busToTake.first} at ${busToTake.second + earliestDeparture}, multiplication: ${busToTake.first * busToTake.second}
-                CRT: $crt
+                Bus to take ${bus.first} at ${bus.second + earliestDep}, multiplication: ${bus.first * bus.second}
+                First time of bus chain: $firstTime
             """.trimIndent()
         )
     }.also { println("Calculated in ${it}ms") }
 }
-
-fun crt(busses: List<String>): BigInteger {
-    // https://www.youtube.com/watch?v=zIFehsBHB8o
-    val n = mutableListOf<BigInteger>()
-    val a = mutableListOf<BigInteger>()
-    val prod = busses.mapIndexed() { index, value ->
-        (value.toBigIntegerOrNull() ?: ONE).also {
-            n.add(it)
-            a.add(-1 * index % it + it)
-        }
-    }.reduce { l, r -> l * r }
-    return (n zip a).map { (n, a) -> a * (prod / n) * (prod / n).modInverse(n) }.sumOf { it } % prod
-}
-
-private operator fun BigInteger.minus(value: Int): BigInteger = this - value.toBigInteger()
-private operator fun Int.rem(other: BigInteger): BigInteger = this.toBigInteger() % other

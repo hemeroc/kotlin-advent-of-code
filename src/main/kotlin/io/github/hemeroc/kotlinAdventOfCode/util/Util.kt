@@ -1,6 +1,7 @@
 package io.github.hemeroc.kotlinAdventOfCode.util
 
 import java.io.File
+import java.math.BigInteger
 
 fun readFile(year: Int, filename: String) =
     File(
@@ -16,6 +17,19 @@ fun readCharacters(year: Int, filename: String) =
     readFile(year, filename)
         .readText()
         .toList()
+
+fun <E> List<E>.partitionIndexed(
+    firstPartition: (Int, E) -> E?,
+    secondPartition: (Int, E) -> E?,
+): Pair<List<E>, List<E>> {
+    val first = mutableListOf<E>()
+    val second = mutableListOf<E>()
+    this.forEachIndexed { index, value ->
+        firstPartition(index, value)?.also { first.add(it) }
+        secondPartition(index, value)?.also { second.add(it) }
+    }
+    return Pair(first, second)
+}
 
 data class Position(val x: Int, val y: Int) {
     operator fun plus(position: Position) = Position(x + position.x, y + position.y)
@@ -35,3 +49,5 @@ operator fun <T> List<MutableList<T>>.set(current: Position, value: T) {
 
 operator fun <T> List<List<T>>.get(current: Position) =
     this[current.x][current.y]
+
+operator fun Int.rem(other: BigInteger): BigInteger = this.toBigInteger() % other
