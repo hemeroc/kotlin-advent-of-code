@@ -51,3 +51,37 @@ operator fun <T> List<List<T>>.get(current: Position) =
     this[current.x][current.y]
 
 operator fun Int.rem(other: BigInteger): BigInteger = this.toBigInteger() % other
+
+
+operator fun <K, V> MutableMap<K, V>.set(keys: List<K>, value: V) =
+    keys.forEach { key -> this[key] = value }
+
+fun IntRange.cartProd(n: Int): Sequence<List<Int>> {
+    val ranges = repeat(n).toList().toTypedArray()
+    return cartProd(*(ranges))
+}
+
+fun <T : Any> T.repeat(times: Int? = null): Sequence<T> = sequence {
+    var count = 0
+    while (times == null || count++ < times) yield(this@repeat)
+}
+
+fun <T : Any> cartProd(vararg items: Iterable<T>): Sequence<List<T>> = sequence {
+    if (items.all { it.iterator().hasNext() }) {
+        val itemsIter = items.map { it.iterator() }.filter { it.hasNext() }.toMutableList()
+        val currElement: MutableList<T> = itemsIter.map { it.next() }.toMutableList()
+        loop@ while (true) {
+            yield(currElement.toList())
+            for (pos in itemsIter.count() - 1 downTo 0) {
+                if (!itemsIter[pos].hasNext()) {
+                    if (pos == 0) break@loop
+                    itemsIter[pos] = items[pos].iterator()
+                    currElement[pos] = itemsIter[pos].next()
+                } else {
+                    currElement[pos] = itemsIter[pos].next()
+                    break
+                }
+            }
+        }
+    }
+}
