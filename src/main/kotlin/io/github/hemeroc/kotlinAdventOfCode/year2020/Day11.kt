@@ -2,17 +2,17 @@ package io.github.hemeroc.kotlinAdventOfCode.year2020
 
 import io.github.hemeroc.kotlinAdventOfCode.util.Position
 import io.github.hemeroc.kotlinAdventOfCode.util.forEachPositioned
+import io.github.hemeroc.kotlinAdventOfCode.util.get
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 import io.github.hemeroc.kotlinAdventOfCode.util.set
-import io.github.hemeroc.kotlinAdventOfCode.util.get
 import kotlin.system.measureTimeMillis
 
 fun main() {
     measureTimeMillis {
         val programInput = readLines(2020, "input11.txt").map { it.toList() }.toList()
         val changes = (-1..1).flatMap { x -> (-1..1).mapNotNull { y -> iff(x != 0 || y != 0, Position(x, y)) } }
-        val occupiedSeats1 = programInput.evolve(changes, 4, 1).sumBy { line -> line.count { it == '#' } }
-        val occupiedSeats2 = programInput.evolve(changes, 5).sumBy { line -> line.count { it == '#' } }
+        val occupiedSeats1 = programInput.evolve(changes, 4, 1).sumOf { line -> line.count { it == '#' } }
+        val occupiedSeats2 = programInput.evolve(changes, 5).sumOf { line -> line.count { it == '#' } }
         println(
             """
                 Occupied seats part1: $occupiedSeats1
@@ -36,7 +36,7 @@ private fun List<List<Char>>.evolve(
                 if (seat == 'L' && !oldProgramInput.adjacent(changes, current, maxTravelDistance).contains('#')
                 ) '#'
                 else if (seat == '#' && oldProgramInput.adjacent(changes, current, maxTravelDistance)
-                        .count { it == '#' } >= maxNeighbours
+                    .count { it == '#' } >= maxNeighbours
                 ) 'L'
                 else evolve[current]
         }

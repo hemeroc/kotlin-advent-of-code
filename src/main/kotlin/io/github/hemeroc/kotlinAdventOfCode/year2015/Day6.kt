@@ -48,10 +48,10 @@ fun main() {
                 }
             }
     val lightsOn = lightGrid.map { lightLine ->
-        lightLine.sumBy { if (it.state == ON) 1 else 0 }
+        lightLine.sumOf { if (it.state == ON) 1L else 0L }
     }.sum()
     val brightness = lightGrid.map { lightLine ->
-        lightLine.sumBy { it.brightness }
+        lightLine.sumOf { it.brightness }
     }.sum()
     println("""
         Number of lights turned on: $lightsOn

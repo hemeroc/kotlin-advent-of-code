@@ -4,6 +4,7 @@ import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 import io.github.hemeroc.kotlinAdventOfCode.year2020.Instruction.*
 import io.github.hemeroc.kotlinAdventOfCode.year2020.Status.END
 import io.github.hemeroc.kotlinAdventOfCode.year2020.Status.LOOP
+import java.util.Locale
 import kotlin.system.measureTimeMillis
 
 fun main() {
@@ -69,7 +70,7 @@ enum class Instruction { ACC, JMP, NOP }
 enum class Status { END, LOOP }
 
 val MatchResult.instruction: Instruction
-    get() = Instruction.valueOf(groups["instruction"]?.value?.toUpperCase() ?: throw IllegalArgumentException())
+    get() = Instruction.valueOf(groups["instruction"]?.value?.uppercase(Locale.getDefault()) ?: throw IllegalArgumentException())
 
 
 val MatchResult.parameter: Int

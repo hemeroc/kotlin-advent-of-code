@@ -28,7 +28,7 @@ fun main() {
 }
 
 fun part1Matches(password: String, letter: Char, from: Int, to: Int): Boolean =
-    password.chars().toList().groupingBy { it }.eachCount()[letter.toInt()]?.let {
+    password.chars().toList().groupingBy { it }.eachCount()[letter.code]?.let {
         it in from..to
     } ?: (from == 0 && to == 0)
 
