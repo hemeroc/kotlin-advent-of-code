@@ -5,25 +5,11 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
     measureTimeMillis {
-        val linedata = readLines(2021, "input8.txt")
-            .map { input ->
-                input.split("|")
-                    .last()
-                    .trim()
-                    .split(" ")
-                    .map { code -> code to digits(code.length) }
-
-            }
-            .flatten()
-            .count { it.second != 0 }
-        println(linedata)
+        val detectableValues = mapOf(1 to 2, 7 to 3, 4 to 4, 8 to 7)
+        val data = readLines(2021, "input8.txt")
+        val solution1 = data.sumOf { line ->
+            line.split("|").last().split(" ").count { detectableValues.values.contains(it.length) }
+        }
+        println(solution1)
     }.also { println("Calculated in ${it}ms") }
-}
-
-private fun digits(segmentCount: Int) = when (segmentCount) {
-    2 -> 1
-    4 -> 4
-    3 -> 7
-    7 -> 8
-    else -> 0
 }
