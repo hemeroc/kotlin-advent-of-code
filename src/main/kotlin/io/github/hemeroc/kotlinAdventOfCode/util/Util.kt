@@ -85,3 +85,19 @@ fun <T : Any> cartProd(vararg items: Iterable<T>): Sequence<List<T>> = sequence 
         }
     }
 }
+fun <T> Iterable<T>.split(predicate: (T) -> Boolean): List<List<T>> {
+    val chunks = mutableListOf<List<T>>()
+    var currentChunk = mutableListOf<T>()
+    forEach {
+        if (predicate(it)) {
+            chunks += currentChunk
+            currentChunk = mutableListOf()
+        } else {
+            currentChunk += it
+        }
+    }
+    if (currentChunk.isNotEmpty()) {
+        chunks += currentChunk
+    }
+    return chunks
+}
