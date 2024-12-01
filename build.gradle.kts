@@ -1,7 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "2.1.0"
 }
 
 group = "io.github.hemeroc"
@@ -11,14 +9,10 @@ repositories {
     mavenCentral()
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+kotlin {
+    jvmToolchain(21)
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        allWarningsAsErrors = true
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "1.8"
-    }
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
