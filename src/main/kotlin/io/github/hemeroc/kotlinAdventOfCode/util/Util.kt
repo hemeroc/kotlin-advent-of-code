@@ -4,10 +4,7 @@ import java.io.File
 import java.math.BigInteger
 
 fun readFile(year: Int, filename: String) =
-    File(
-        object {}::class.java.getResource("/io/github/hemeroc/kotlinAdventOfCode/year$year/$filename")
-            .toURI()
-    )
+    File(object {}::class.java.getResource("/io/github/hemeroc/kotlinAdventOfCode/year$year/$filename")!!.toURI())
 
 fun readLines(year: Int, filename: String) =
     readFile(year, filename)
