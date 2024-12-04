@@ -36,7 +36,7 @@ fun main() {
     println(sumRealXmas)
 }
 
-fun search(data: Array<CharArray>, x: Int, y: Int, dirX: Int, dirY: Int, search: Char): Int {
+tailrec fun search(data: Array<CharArray>, x: Int, y: Int, dirX: Int, dirY: Int, search: Char): Int {
     val newX = x + dirX
     val newY = y + dirY
     if (newX < 0 || newY < 0 || newX >= data.size || newY >= data[newX].size) {
