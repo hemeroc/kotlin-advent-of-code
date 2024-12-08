@@ -1,11 +1,11 @@
-package io.github.hemeroc.kotlinAdventOfCode.year2024
+package io.github.hemeroc.kotlinAdventOfCode.year2024.day6
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
-import io.github.hemeroc.kotlinAdventOfCode.year2024.DIRECTION.DOWN
-import io.github.hemeroc.kotlinAdventOfCode.year2024.DIRECTION.LEFT
-import io.github.hemeroc.kotlinAdventOfCode.year2024.DIRECTION.RIGHT
-import io.github.hemeroc.kotlinAdventOfCode.year2024.DIRECTION.UNKNOWN
-import io.github.hemeroc.kotlinAdventOfCode.year2024.DIRECTION.UP
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day6.DIRECTION.DOWN
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day6.DIRECTION.LEFT
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day6.DIRECTION.RIGHT
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day6.DIRECTION.UNKNOWN
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day6.DIRECTION.UP
 
 enum class DIRECTION(val symbol: Char, val position: Position) {
     UP('^', Position(-1, 0)),

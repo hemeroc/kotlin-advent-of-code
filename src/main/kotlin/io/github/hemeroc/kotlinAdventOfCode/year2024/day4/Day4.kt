@@ -1,11 +1,11 @@
-package io.github.hemeroc.kotlinAdventOfCode.year2024
+package io.github.hemeroc.kotlinAdventOfCode.year2024.day4
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 import io.github.hemeroc.kotlinAdventOfCode.year2019.tail
-import io.github.hemeroc.kotlinAdventOfCode.year2024.Direction.DOWN_LEFT
-import io.github.hemeroc.kotlinAdventOfCode.year2024.Direction.DOWN_RIGHT
-import io.github.hemeroc.kotlinAdventOfCode.year2024.Direction.UP_LEFT
-import io.github.hemeroc.kotlinAdventOfCode.year2024.Direction.UP_RIGHT
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day4.Direction.DOWN_LEFT
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day4.Direction.DOWN_RIGHT
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day4.Direction.UP_LEFT
+import io.github.hemeroc.kotlinAdventOfCode.year2024.day4.Direction.UP_RIGHT
 import kotlin.system.measureNanoTime
 
 private const val SEARCHTERM = "MAS"

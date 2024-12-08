@@ -1,4 +1,4 @@
-package io.github.hemeroc.kotlinAdventOfCode.year2024
+package io.github.hemeroc.kotlinAdventOfCode.year2024.day1
 
 import io.github.hemeroc.kotlinAdventOfCode.util.readLines
 import kotlin.math.abs
